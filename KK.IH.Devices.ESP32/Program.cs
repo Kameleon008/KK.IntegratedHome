@@ -1,3 +1,10 @@
+using System.Collections;
+using Iot.Device.Bmxx80.FilteringMode;
+using KK.IH.Devices.ESP32.Hardware.Sensors;
+using KK.IH.Devices.ESP32.Hardware.Sensors.Bmp280;
+using nanoFramework.Json;
+using UnitsNet.Units;
+
 namespace KK.IH.Devices.ESP32
 {
     using Iot.Device.Bmxx80;
@@ -22,7 +29,7 @@ namespace KK.IH.Devices.ESP32
             IAppsettings appsettings;
             IAppsettingsManager appsettingsManager;
 
-            Bmp280 bmp280;
+            SensorBmp280 sensorBmp280;
             DeviceClient azureIoT;
 
             InitializeAppsettings();
@@ -31,12 +38,14 @@ namespace KK.IH.Devices.ESP32
             ConnectToWifi();
             ConnectIotHub();
 
+            ArrayList list = new ArrayList();
 
             while (true)
             {
 
-                var readResult = bmp280.Read();
-                string messageContent = $"{{\"Temperature\":{readResult.Temperature.DegreesCelsius},\"Pressure\":{readResult.Pressure.Hectopascals}}}";
+                IList readResult = sensorBmp280.GetMeasurements();
+
+                string messageContent = JsonConvert.SerializeObject(readResult);
                 azureIoT.SendMessage(messageContent, new CancellationTokenSource(2000).Token);
                 Debug.WriteLine(messageContent);
 
@@ -77,12 +86,17 @@ namespace KK.IH.Devices.ESP32
 
             void InitializeSensorBmp280()
             {
-                I2cConnectionSettings i2cSettings = new(busIdI2C, Bmp280.SecondaryI2cAddress);
-                I2cDevice i2cDevice = I2cDevice.Create(i2cSettings);
-                bmp280 = new Bmp280(i2cDevice);
+                var config = new SensorBmp280Config()
+                {
+                    PressureSampling = Sampling.HighResolution,
+                    TemperatureSampling = Sampling.Skipped,
+                    FilteringMode = Bmx280FilteringMode.X2,
+                    PressureUnit = "Hectopascal",
+                    TemperatureUnit = "DegreeCelsius",
+                    StandbyTime = StandbyTime.Ms1000
+                };
 
-                bmp280.TemperatureSampling = Sampling.HighResolution;
-                bmp280.PressureSampling = Sampling.HighResolution;
+                sensorBmp280 = new SensorBmp280(config); 
             }
 
             void ConnectIotHub()

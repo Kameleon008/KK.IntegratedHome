@@ -23,6 +23,11 @@
     <Compile Include="Components\Appsettings\AppsettingsManager.cs" />
     <Compile Include="Components\Appsettings\IAppsettingsManager.cs" />
     <Compile Include="Components\Appsettings\IAppsettings.cs" />
+    <Compile Include="Hardware\Sensors\Bmp280\SensorBmp280Config.cs" />
+    <Compile Include="Hardware\Sensors\SensorResult.cs" />
+    <Compile Include="Hardware\Sensors\Bmp280\SensorBmp280.cs" />
+    <Compile Include="Hardware\Sensors\ISensorResult.cs" />
+    <Compile Include="Hardware\Sensors\ISensor.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Resources.Designer.cs" />

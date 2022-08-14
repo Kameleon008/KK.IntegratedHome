@@ -6,6 +6,6 @@ namespace KK.IH.Devices.ESP32.Hardware.Sensors
 
     public interface ISensor
     {
-        public ISensorResult[] GetMeasurements();
+        public IList GetMeasurements();
     }
 }

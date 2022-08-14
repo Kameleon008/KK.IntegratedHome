@@ -17,5 +17,9 @@ namespace KK.IH.Devices.ESP32.Hardware.Sensors.Bmp280
         public string TemperatureUnit { get; set; }
 
         public string PressureUnit { get; set; }
+
+        public int I2cBusId { get; set; }
+
+        public byte I2CAddress { get; set; }
     }
 }

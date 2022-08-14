@@ -23,7 +23,7 @@ namespace KK.IH.Devices.ESP32
         public static void Main()
         {
             int sleepTimeMinutes = 60000;
-            int secondsToGoToSleep = 60 * 5;
+            int secondsToGoToSleep = 5;
             int busIdI2C;
 
             IAppsettings appsettings;
@@ -38,12 +38,10 @@ namespace KK.IH.Devices.ESP32
             ConnectToWifi();
             ConnectIotHub();
 
-            ArrayList list = new ArrayList();
-
             while (true)
             {
-
-                IList readResult = sensorBmp280.GetMeasurements();
+                IList readResult = new ArrayList();
+                readResult.Add(sensorBmp280.GetMeasurements());
 
                 string messageContent = JsonConvert.SerializeObject(readResult);
                 azureIoT.SendMessage(messageContent, new CancellationTokenSource(2000).Token);
@@ -86,6 +84,10 @@ namespace KK.IH.Devices.ESP32
 
             void InitializeSensorBmp280()
             {
+
+                // TODO
+                // implement load config from device twin in IoT Hub 
+
                 var config = new SensorBmp280Config()
                 {
                     PressureSampling = Sampling.HighResolution,
@@ -93,7 +95,9 @@ namespace KK.IH.Devices.ESP32
                     FilteringMode = Bmx280FilteringMode.X2,
                     PressureUnit = "Hectopascal",
                     TemperatureUnit = "DegreeCelsius",
-                    StandbyTime = StandbyTime.Ms1000
+                    StandbyTime = StandbyTime.Ms1000,
+                    I2cBusId = 1,
+                    I2CAddress = Bmx280Base.SecondaryI2cAddress,
                 };
 
                 sensorBmp280 = new SensorBmp280(config); 

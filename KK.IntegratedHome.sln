@@ -7,7 +7,7 @@ Project("{11A8DD76-328B-46DF-9F39-F559912D0360}") = "KK.IH.Devices.ESP32", "KK.I
 EndProject
 Project("{11A8DD76-328B-46DF-9F39-F559912D0360}") = "KK.IH.Devices.ESP32.Utility", "KK.IH.Devices.ESP32.Utility\KK.IH.Devices.ESP32.Utility.nfproj", "{A1A5D128-296D-4BA2-A0D6-F1C9D4D1BB0D}"
 EndProject
-Project("{11A8DD76-328B-46DF-9F39-F559912D0360}") = "KK.IH.Devices.ESP32.FileManager", "NFApp1\KK.IH.Devices.ESP32.FileManager.nfproj", "{1D260334-83D0-416E-9069-2107867061AF}"
+Project("{11A8DD76-328B-46DF-9F39-F559912D0360}") = "KK.IH.Devices.ESP32.FileManager", "KK.IH.Devices.ESP32.FileManager\KK.IH.Devices.ESP32.FileManager.nfproj", "{1D260334-83D0-416E-9069-2107867061AF}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

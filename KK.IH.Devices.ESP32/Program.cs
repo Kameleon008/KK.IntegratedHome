@@ -39,7 +39,7 @@ namespace KK.IH.Devices.ESP32
             InitializeSensorBmp280();
             InitializeSensorScd41();
             ConnectToWifi();
-            ConnectIotHub();
+            //ConnectIotHub();
 
 
             while (true)
@@ -49,7 +49,7 @@ namespace KK.IH.Devices.ESP32
                 readResult.Add(sensorBmp280.GetMeasurements());
 
                 string messageContent = JsonConvert.SerializeObject(readResult);
-                azureIoT.SendMessage(messageContent, new CancellationTokenSource(2000).Token);
+                //azureIoT.SendMessage(messageContent, new CancellationTokenSource(2000).Token);
                 Debug.WriteLine(messageContent);
 
                 Thread.Sleep(secondsToGoToSleep * 1000);

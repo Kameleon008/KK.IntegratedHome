@@ -24,6 +24,8 @@
     <Compile Include="Components\Appsettings\IAppsettingsManager.cs" />
     <Compile Include="Components\Appsettings\IAppsettings.cs" />
     <Compile Include="Hardware\Sensors\Bmp280\SensorBmp280Config.cs" />
+    <Compile Include="Hardware\Sensors\Scd41\SensorScd41.cs" />
+    <Compile Include="Hardware\Sensors\Scd41\SensorScd41Config.cs" />
     <Compile Include="Hardware\Sensors\SensorResult.cs" />
     <Compile Include="Hardware\Sensors\Bmp280\SensorBmp280.cs" />
     <Compile Include="Hardware\Sensors\ISensorResult.cs" />
@@ -185,6 +187,9 @@
   <ItemGroup>
     <Folder Include="Components\Logger\" />
     <Folder Include="Hardware\Outputs\" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\KK.IH.Devices.ESP32.Utility\KK.IH.Devices.ESP32.Utility.nfproj" />
   </ItemGroup>
   <Import Project="$(NanoFrameworkProjectSystemPath)NFProjectSystem.CSharp.targets" Condition="Exists('$(NanoFrameworkProjectSystemPath)NFProjectSystem.CSharp.targets')" />
   <ProjectExtensions>

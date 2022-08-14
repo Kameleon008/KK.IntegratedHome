@@ -16,7 +16,7 @@ namespace KK.IH.Devices.ESP32
     using System.Diagnostics;
     using System.Threading;
     using Components.Appsettings;
-
+    using KK.IH.Devices.ESP32.Hardware.Sensors.SCD41;
 
     public class Program
     {
@@ -29,17 +29,22 @@ namespace KK.IH.Devices.ESP32
             IAppsettings appsettings;
             IAppsettingsManager appsettingsManager;
 
-            SensorBmp280 sensorBmp280;
+            ISensor sensorBmp280;
+            SensorScd41 sensorScd41;
+
             DeviceClient azureIoT;
 
             InitializeAppsettings();
             InitializeInterfaceI2C();
             InitializeSensorBmp280();
+            InitializeSensorScd41();
             ConnectToWifi();
             ConnectIotHub();
 
+
             while (true)
             {
+                sensorScd41.GetSerialNumber();
                 IList readResult = new ArrayList();
                 readResult.Add(sensorBmp280.GetMeasurements());
 
@@ -100,7 +105,18 @@ namespace KK.IH.Devices.ESP32
                     I2CAddress = Bmx280Base.SecondaryI2cAddress,
                 };
 
-                sensorBmp280 = new SensorBmp280(config); 
+                sensorBmp280 = new SensorBmp280(config);
+            }
+
+            void InitializeSensorScd41()
+            {
+                var config = new SensorScd41Config()
+                {
+                    I2cBusId = 1,
+                    I2CAddress = 98,
+                };
+
+                sensorScd41 = new SensorScd41(config);
             }
 
             void ConnectIotHub()

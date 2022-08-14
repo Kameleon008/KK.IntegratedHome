@@ -1,13 +1,9 @@
-﻿using System;
-using System.Collections;
-using Iot.Device.Bmxx80.ReadResult;
-using nanoFramework.Json;
-using UnitsNet.Units;
-
-namespace KK.IH.Devices.ESP32.Hardware.Sensors.Bmp280
+﻿namespace KK.IH.Devices.ESP32.Hardware.Sensors.Bmp280
 {
     using System.Device.I2c;
     using Iot.Device.Bmxx80;
+    using Iot.Device.Bmxx80.ReadResult;
+    using UnitsNet.Units;
 
     class SensorBmp280 : ISensor
     {
@@ -26,7 +22,6 @@ namespace KK.IH.Devices.ESP32.Hardware.Sensors.Bmp280
         {
             var sensorReadings = _sensor.Read();
             var sensorResults = new SensorResult[2];
-
             sensorResults[0] = GetTemperature(sensorReadings);
             sensorResults[1] = GetPressure(sensorReadings);
 
@@ -50,11 +45,11 @@ namespace KK.IH.Devices.ESP32.Hardware.Sensors.Bmp280
 
         private SensorResult GetTemperature(Bmp280ReadResult result)
         {
-            var kind = "Temperature";
+            var category = "Temperature";
             var value = result.Temperature.As(this.ParseTemperatureUnit(this._config.TemperatureUnit));
             var unit = this._config.TemperatureUnit;
 
-            return new SensorResult(kind, value, unit);
+            return new SensorResult(category, value, unit);
         }
 
         private SensorResult GetPressure(Bmp280ReadResult result)

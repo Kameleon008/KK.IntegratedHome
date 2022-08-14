@@ -182,6 +182,10 @@
   <ItemGroup>
     <EmbeddedResource Include="Resources.resx" />
   </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Components\Logger\" />
+    <Folder Include="Hardware\Outputs\" />
+  </ItemGroup>
   <Import Project="$(NanoFrameworkProjectSystemPath)NFProjectSystem.CSharp.targets" Condition="Exists('$(NanoFrameworkProjectSystemPath)NFProjectSystem.CSharp.targets')" />
   <ProjectExtensions>
     <ProjectCapabilities>

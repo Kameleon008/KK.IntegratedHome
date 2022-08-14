@@ -23,7 +23,7 @@ namespace KK.IH.Devices.ESP32
         public static void Main()
         {
             int sleepTimeMinutes = 60000;
-            int secondsToGoToSleep = 2;
+            int secondsToGoToSleep = 60 * 5;
             int busIdI2C;
 
             IAppsettings appsettings;
@@ -89,7 +89,7 @@ namespace KK.IH.Devices.ESP32
                 var config = new SensorBmp280Config()
                 {
                     PressureSampling = Sampling.HighResolution,
-                    TemperatureSampling = Sampling.Skipped,
+                    TemperatureSampling = Sampling.HighResolution,
                     FilteringMode = Bmx280FilteringMode.X2,
                     PressureUnit = "Hectopascal",
                     TemperatureUnit = "DegreeCelsius",

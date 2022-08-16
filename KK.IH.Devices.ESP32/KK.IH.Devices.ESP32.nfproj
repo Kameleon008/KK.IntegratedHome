@@ -27,6 +27,7 @@
     <Compile Include="Hardware\Display\Ssd1306\DisplaySsd1306Converter.cs" />
     <Compile Include="Hardware\Display\Ssd1306\DisplaySsd1306Config.cs" />
     <Compile Include="Hardware\Display\Ssd1306\DisplaySsd1306.cs" />
+    <Compile Include="Hardware\Controler\Controler.cs" />
     <Compile Include="Hardware\Sensors\Bmp280\SensorBmp280Config.cs" />
     <Compile Include="Hardware\Sensors\Scd41\SensorScd41.cs" />
     <Compile Include="Hardware\Sensors\Scd41\SensorScd41Config.cs" />
@@ -36,6 +37,8 @@
     <Compile Include="Hardware\Sensors\ISensor.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Providers\ClientProvider.cs" />
+    <Compile Include="Providers\NetworkProvider.cs" />
     <Compile Include="Resources.Designer.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -192,9 +195,6 @@
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="Resources.resx" />
-  </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Components\Logger\" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\KK.IH.Devices.ESP32.Utility\KK.IH.Devices.ESP32.Utility.nfproj" />

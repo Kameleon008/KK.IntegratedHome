@@ -23,6 +23,10 @@
     <Compile Include="Components\Appsettings\AppsettingsManager.cs" />
     <Compile Include="Components\Appsettings\IAppsettingsManager.cs" />
     <Compile Include="Components\Appsettings\IAppsettings.cs" />
+    <Compile Include="Hardware\Display\IDisplay.cs" />
+    <Compile Include="Hardware\Display\Ssd1306\DisplaySsd1306Converter.cs" />
+    <Compile Include="Hardware\Display\Ssd1306\DisplaySsd1306Config.cs" />
+    <Compile Include="Hardware\Display\Ssd1306\DisplaySsd1306.cs" />
     <Compile Include="Hardware\Sensors\Bmp280\SensorBmp280Config.cs" />
     <Compile Include="Hardware\Sensors\Scd41\SensorScd41.cs" />
     <Compile Include="Hardware\Sensors\Scd41\SensorScd41Config.cs" />
@@ -47,6 +51,11 @@
     </Reference>
     <Reference Include="Iot.Device.Common.WeatherHelper, Version=1.2.0.0, Culture=neutral, PublicKeyToken=c07d481e9758c731">
       <HintPath>..\packages\nanoFramework.Iot.Device.Common.WeatherHelper.1.2.39\lib\Iot.Device.Common.WeatherHelper.dll</HintPath>
+      <Private>True</Private>
+      <SpecificVersion>True</SpecificVersion>
+    </Reference>
+    <Reference Include="Iot.Device.Ssd13xx, Version=1.2.0.0, Culture=neutral, PublicKeyToken=c07d481e9758c731">
+      <HintPath>..\packages\nanoFramework.Iot.Device.Ssd13xx.1.2.3\lib\Iot.Device.Ssd13xx.dll</HintPath>
       <Private>True</Private>
       <SpecificVersion>True</SpecificVersion>
     </Reference>
@@ -186,7 +195,6 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Components\Logger\" />
-    <Folder Include="Hardware\Outputs\" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\KK.IH.Devices.ESP32.Utility\KK.IH.Devices.ESP32.Utility.nfproj" />

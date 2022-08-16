@@ -65,7 +65,7 @@
 
         private SensorResult GetTemperature(Bmp280ReadResult result)
         {
-            var category = "Temperature";
+            var category = "T1";
             var value = result.Temperature.As(this.ParseTemperatureUnit(this._config.TemperatureUnit));
             var unit = this._config.TemperatureUnit;
 
@@ -74,7 +74,7 @@
 
         private SensorResult GetPressure(Bmp280ReadResult result)
         {
-            var kind = "Pressure";
+            var kind = "P1";
             var value = result.Pressure.As(this.ParsePressureUnit(this._config.PressureUnit));
             var unit = this._config.PressureUnit;
 

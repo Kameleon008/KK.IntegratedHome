@@ -1,9 +1,11 @@
 using System.Collections;
 using Iot.Device.Bmxx80.FilteringMode;
+using KK.IH.Devices.ESP32.Hardware.Display;
+using KK.IH.Devices.ESP32.Hardware.Display.Ssd1306;
 using KK.IH.Devices.ESP32.Hardware.Sensors;
 using KK.IH.Devices.ESP32.Hardware.Sensors.Bmp280;
+using KK.IH.Devices.ESP32.Utility.Devices.Ssd1306;
 using nanoFramework.Json;
-using UnitsNet.Units;
 
 namespace KK.IH.Devices.ESP32
 {
@@ -12,11 +14,12 @@ namespace KK.IH.Devices.ESP32
     using nanoFramework.Hardware.Esp32;
     using nanoFramework.Networking;
     using System;
-    using System.Device.I2c;
     using System.Diagnostics;
     using System.Threading;
     using Components.Appsettings;
     using KK.IH.Devices.ESP32.Hardware.Sensors.SCD41;
+    using Iot.Device.Ssd13xx;
+    using System.Device.I2c;
 
     public class Program
     {
@@ -29,8 +32,11 @@ namespace KK.IH.Devices.ESP32
             IAppsettings appsettings;
             IAppsettingsManager appsettingsManager;
 
+            IList sensorList = new ArrayList();
+
             ISensor sensorBmp280;
-            SensorScd41 sensorScd41;
+            ISensor sensorScd41;
+            IDisplay displaySsd1306;
 
             DeviceClient azureIoT;
 
@@ -38,21 +44,38 @@ namespace KK.IH.Devices.ESP32
             InitializeInterfaceI2C();
             InitializeSensorBmp280();
             InitializeSensorScd41();
+            InitializeDisplaySsd1306();
             ConnectToWifi();
             //ConnectIotHub();
 
+            sensorList.Add(sensorScd41);
+            sensorList.Add(sensorBmp280);
 
             while (true)
             {
-                sensorScd41.GetSerialNumber();
-                IList readResult = new ArrayList();
-                readResult.Add(sensorBmp280.GetMeasurements());
+                var readResult = GetMeasurement();
+                displaySsd1306.DisplayMeasurement(readResult);
 
-                string messageContent = JsonConvert.SerializeObject(readResult);
+                var messageContent = JsonConvert.SerializeObject(readResult);
                 //azureIoT.SendMessage(messageContent, new CancellationTokenSource(2000).Token);
                 Debug.WriteLine(messageContent);
 
                 Thread.Sleep(secondsToGoToSleep * 1000);
+            }
+
+            IList GetMeasurement()
+            {
+                IList readResult = new ArrayList();
+                foreach (ISensor sensor in sensorList)
+                {
+                    var sensorMeasurement = sensor.GetMeasurements();
+                    foreach (ISensorResult measurement in sensorMeasurement)
+                    {
+                        readResult.Add(measurement);
+                    }
+                }
+
+                return readResult;
             }
 
             void GoToSleep()
@@ -113,11 +136,25 @@ namespace KK.IH.Devices.ESP32
                 var config = new SensorScd41Config()
                 {
                     I2cBusId = 1,
-                    I2CAddress = 98,
+                    I2CAddress = 0x62,
                 };
 
                 sensorScd41 = new SensorScd41(config);
             }
+
+            void InitializeDisplaySsd1306()
+            {
+                var config = new DisplaySsd1306Config()
+                {
+                    I2cBusId = 1,
+                    I2CAddress = Ssd1306.DefaultI2cAddress,
+                    Font = new BasicFont(),
+                    DisplayResolution = Ssd13xx.DisplayResolution.OLED128x64
+                };
+
+                displaySsd1306 = new DisplaySsd1306(config);
+            }
+
 
             void ConnectIotHub()
             {

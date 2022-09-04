@@ -20,7 +20,7 @@ namespace KK.IH.Devices.ESP32
             {
                 if ((Resources.manager == null))
                 {
-                    Resources.manager = new System.Resources.ResourceManager("AzureSDKSleepBMP280.Resources", typeof(Resources).Assembly);
+                    Resources.manager = new System.Resources.ResourceManager("KK.IH.Devices.ESP32.Resources", typeof(Resources).Assembly);
                 }
                 return Resources.manager;
             }

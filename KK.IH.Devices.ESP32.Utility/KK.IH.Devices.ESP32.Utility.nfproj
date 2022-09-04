@@ -18,6 +18,7 @@
   </PropertyGroup>
   <Import Project="$(NanoFrameworkProjectSystemPath)NFProjectSystem.props" Condition="Exists('$(NanoFrameworkProjectSystemPath)NFProjectSystem.props')" />
   <ItemGroup>
+    <Compile Include="Debug\Logger.cs" />
     <Compile Include="Devices\Scd41\Scd41.cs" />
     <Compile Include="Devices\Scd41\Scd41ReadResult.cs" />
     <Compile Include="Devices\Scd41\Structs\Humidity.cs" />

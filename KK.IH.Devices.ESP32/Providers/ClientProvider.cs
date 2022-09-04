@@ -1,8 +1,8 @@
 ﻿using KK.IH.Devices.ESP32.Components.Appsettings;
+using KK.IH.Devices.ESP32.Utility.Debug;
 using nanoFramework.Azure.Devices.Client;
 using nanoFramework.Networking;
 using System;
-using System.Diagnostics;
 using System.Security.Cryptography.X509Certificates;
 
 namespace KK.IH.Devices.ESP32.Providers
@@ -13,7 +13,7 @@ namespace KK.IH.Devices.ESP32.Providers
         {
             if (WifiNetworkHelper.Status != NetworkHelperStatus.NetworkIsReady)
             {
-                Debug.WriteLine($"Wifi network is not ready, actual state: {WifiNetworkHelper.Status}");
+                Logger.Info($"Wifi network is not ready, actual state: {WifiNetworkHelper.Status}");
                 return;
             }
 
@@ -22,13 +22,12 @@ namespace KK.IH.Devices.ESP32.Providers
             try
             {
                 client.Open();
-                Debug.WriteLine($"Connected to Azure Iot Hub on address: {appsettings.IotHubAddress}");
+                Logger.Info($"Connected to Azure Iot Hub on address: {appsettings.IotHubAddress}");
             }
-            catch (Exception e)
+            catch (Exception ex)
             {
-                Debug.WriteLine($"Error while connecting to Azure Iot Hub on address: {appsettings.IotHubAddress}");
-                Console.WriteLine(e.Message);
-                throw;
+                Logger.Error($"Could not open connection to Azure IoTHub on address: {appsettings.IotHubAddress}");
+                Logger.Error($"Exception message {ex.Message}");
             }
         }
     }

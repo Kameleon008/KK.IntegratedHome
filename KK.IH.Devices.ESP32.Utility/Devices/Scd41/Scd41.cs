@@ -3,7 +3,6 @@
     using KK.IH.Devices.ESP32.Utility.Devices.Scd41.Structs;
     using System;
     using System.Device.I2c;
-    using System.Diagnostics;
     using System.Threading;
 
     public class Scd41
@@ -21,15 +20,15 @@
         {
             var writeBufferArray = BitConverter.GetBytes(0xEC05);
             var writeBuffer = new SpanByte(writeBufferArray);
-  
-            var writeResult = _device.Write(writeBuffer);
-            Debug.WriteLine($"Read(): Write: {writeResult.BytesTransferred}, {writeResult.Status}");
+
+            this._device.Write(writeBuffer);
+            //Debug.WriteLine($"Read(): Write: {writeResult.BytesTransferred}, {writeResult.Status}");
 
             var readBufferArray = new byte[12];
             var readBuffer = new SpanByte(readBufferArray);
 
-            var readResult = _device.Read(readBuffer);
-            Debug.WriteLine($"Read(): Read: {readResult.BytesTransferred}, {readResult.Status}");
+            this._device.Read(readBuffer);
+            //Debug.WriteLine($"Read(): Read: {readResult.BytesTransferred}, {readResult.Status}");
 
             var co2 = this.GetCo2FromReadings(readBuffer);
             var humidity = this.GetHumidityFromReadings(readBuffer);
@@ -71,8 +70,6 @@
             writeBufferArray[1] = 0xB1;
             var writeBuffer = new SpanByte(writeBufferArray);
             var result = this._device.Write(writeBuffer);
-            Debug.WriteLine($"StartPeriodicMeasurement(): Write: {result.BytesTransferred}, {result.Status}");
-
         }
     }
 }

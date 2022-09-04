@@ -1,9 +1,9 @@
 ﻿using KK.IH.Devices.ESP32.Components.Appsettings;
 using nanoFramework.Azure.Devices.Client;
+using nanoFramework.Networking;
 using System;
-using System.Collections.Generic;
 using System.Diagnostics;
-using System.Text;
+using System.Security.Cryptography.X509Certificates;
 
 namespace KK.IH.Devices.ESP32.Providers
 {
@@ -11,8 +11,14 @@ namespace KK.IH.Devices.ESP32.Providers
     {
         public static void ProvideIotHubConnection(IAppsettings appsettings, ref DeviceClient client)
         {
-            client = new DeviceClient(appsettings.IotHubAddress, appsettings.DeviceId, appsettings.DeviceSasKey);
+            if (WifiNetworkHelper.Status != NetworkHelperStatus.NetworkIsReady)
+            {
+                Debug.WriteLine($"Wifi network is not ready, actual state: {WifiNetworkHelper.Status}");
+                return;
+            }
 
+            var azureRootCACert = new X509Certificate(Resources.GetBytes(Resources.BinaryResources.AzureRoot));
+            client = new DeviceClient(appsettings.IotHubAddress, appsettings.DeviceId, appsettings.DeviceSasKey, azureCert: azureRootCACert);
             try
             {
                 client.Open();

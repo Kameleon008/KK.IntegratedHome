@@ -9,6 +9,10 @@ namespace KK.IH.Devices.ESP32
     using Providers;
     using nanoFramework.Json;
     using nanoFramework.Azure.Devices.Client;
+    using KK.IH.Devices.ESP32.Hardware.Sensors.Bmp280;
+    using KK.IH.Devices.ESP32.Hardware.Sensors.SCD41;
+    using Iot.Device.Bmxx80;
+    using Iot.Device.Bmxx80.FilteringMode;
 
     class Program
     {
@@ -24,12 +28,16 @@ namespace KK.IH.Devices.ESP32
         {
             Init();
 
+            sensorList = new ArrayList();
+            sensorList.Add(InitializeSensorBmp280());
+            sensorList.Add(InitializeSensorScd41());
+
             while (true)
             {
                 var readResult = GetMeasurement();
 
                 var messageContent = JsonConvert.SerializeObject(readResult);
-                deviceClient.SendMessage(messageContent, new CancellationTokenSource(2000).Token);
+                //deviceClient.SendMessage(messageContent, new CancellationTokenSource(2000).Token);
                 Debug.WriteLine(messageContent);
 
                 Thread.Sleep(5 * 1000);
@@ -43,9 +51,7 @@ namespace KK.IH.Devices.ESP32
             appsettings = appsettingsManager.GetAppsettings();
 
             NetworkProvider.ProvideWifiConnection(appsettings);
-
             ClientProvider.ProvideIotHubConnection(appsettings, ref deviceClient);
-
             Controler.ConfigurePeripherials();
         }
 
@@ -71,37 +77,39 @@ namespace KK.IH.Devices.ESP32
         //    Configuration.SetPinFunction(22, DeviceFunction.I2C1_CLOCK);
         //}
 
-        //void InitializeSensorBmp280()
-        //{
+        static ISensor InitializeSensorBmp280()
+        {
 
-        //    // TODO
-        //    // implement load config from device twin in IoT Hub 
+            // TODO
+            // implement load config from device twin in IoT Hub 
 
-        //    var config = new SensorBmp280Config()
-        //    {
-        //        PressureSampling = Sampling.HighResolution,
-        //        TemperatureSampling = Sampling.HighResolution,
-        //        FilteringMode = Bmx280FilteringMode.X2,
-        //        PressureUnit = "Hectopascal",
-        //        TemperatureUnit = "DegreeCelsius",
-        //        StandbyTime = StandbyTime.Ms1000,
-        //        I2cBusId = 1,
-        //        I2CAddress = Bmx280Base.SecondaryI2cAddress,
-        //    };
+            var config = new SensorBmp280Config()
+            {
+                PressureSampling = Sampling.HighResolution,
+                TemperatureSampling = Sampling.HighResolution,
+                FilteringMode = Bmx280FilteringMode.X2,
+                PressureUnit = "Hectopascal",
+                TemperatureUnit = "DegreeCelsius",
+                StandbyTime = StandbyTime.Ms1000,
+                I2cBusId = 1,
+                I2CAddress = Bmx280Base.SecondaryI2cAddress,
+            };
 
-        //    //sensorBmp280 = new SensorBmp280(config);
-        //}
+            var sensorBmp280 = new SensorBmp280(config);
+            return sensorBmp280;
+        }
 
-        //void InitializeSensorScd41()
-        //{
-        //    var config = new SensorScd41Config()
-        //    {
-        //        I2cBusId = 1,
-        //        I2CAddress = 0x62,
-        //    };
+        static ISensor InitializeSensorScd41()
+        {
+            var config = new SensorScd41Config()
+            {
+                I2cBusId = 1,
+                I2CAddress = 0x62,
+            };
 
-        //    //sensorScd41 = new SensorScd41(config);
-        //}
+            var sensorScd41 = new SensorScd41(config);
+            return sensorScd41;
+        }
 
         //void InitializeDisplaySsd1306()
         //{

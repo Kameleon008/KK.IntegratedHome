@@ -1,9 +1,9 @@
 ﻿namespace KK.IH.Devices.ESP32.Providers
 {
-    using System.Diagnostics;
     using System.Threading;
     using nanoFramework.Networking;
     using KK.IH.Devices.ESP32.Components.Appsettings;
+    using KK.IH.Devices.ESP32.Utility.Debug;
 
     static class NetworkProvider
     {
@@ -15,13 +15,13 @@
             var success = WifiNetworkHelper.ConnectDhcp(appsettings.WifiName, appsettings.WifiPassword, requiresDateTime: true, token: cs.Token);
             if (!success)
             {
-                Debug.WriteLine($"Error while trying to connect to {appsettings.WifiName}");
-                Debug.WriteLine($"Error status {nameof(WifiNetworkHelper.Status)}");
+                Logger.Error($"Could not connect to: {appsettings.WifiName}");
+                Logger.Error($"Wifi connection status: {nameof(WifiNetworkHelper.Status)}");
                 return;
             }
 
-            Debug.WriteLine($"Connected To {appsettings.WifiName}");
-            Debug.WriteLine($"Connection status {WifiNetworkHelper.Status}");
+            Logger.Info($"Connected To {appsettings.WifiName}");
+            Logger.Info($"Connection status {WifiNetworkHelper.Status}");
         }
     }
 }

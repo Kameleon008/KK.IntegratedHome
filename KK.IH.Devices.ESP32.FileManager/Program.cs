@@ -1,10 +1,10 @@
 namespace KK.IH.Devices.ESP32.FileManager
 {
-    using System.Diagnostics;
     using System.IO;
     using System.Text;
     using nanoFramework.Json;
     using KK.IH.Devices.ESP32.FileManager.Models;
+    using KK.IH.Devices.ESP32.Utility.Debug;
 
     public class Program
     {
@@ -14,7 +14,7 @@ namespace KK.IH.Devices.ESP32.FileManager
 
             string sampleFileInternalPath = "I:\\appsettings.json";
 
-            Debug.WriteLine("Serializing File");
+            Logger.Info("Serializing File");
             var appsettings = new AppsettingsModel()
             {
                 WifiName = "{WifiName}",
@@ -25,10 +25,10 @@ namespace KK.IH.Devices.ESP32.FileManager
             };
 
             string json = JsonConvert.SerializeObject(appsettings);
-            Debug.WriteLine(json);
+            Logger.Info(json);
 
 
-            Debug.WriteLine("Writing File");
+            Logger.Info("Writing File");
             File.Create(sampleFileInternalPath);
             byte[] sampleBuffer = Encoding.UTF8.GetBytes(json);
             FileStream fs = new FileStream(sampleFileInternalPath, FileMode.Open, FileAccess.ReadWrite);
@@ -37,12 +37,12 @@ namespace KK.IH.Devices.ESP32.FileManager
 
 
 
-            Debug.WriteLine("Reading File");
+            Logger.Info("Reading File");
             FileStream fs2 = new FileStream(sampleFileInternalPath, FileMode.Open, FileAccess.Read);
             byte[] fileContentBytes = new byte[fs2.Length];
             fs2.Read(fileContentBytes, 0, (int)fs2.Length);
             var fileContentString = Encoding.UTF8.GetString(fileContentBytes, 0, (int)fs2.Length);
-            Debug.WriteLine(fileContentString);
+            Logger.Info(fileContentString);
 
         }
     }

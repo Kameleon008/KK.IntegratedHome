@@ -1,7 +1,6 @@
 namespace KK.IH.Devices.ESP32
 {
     using System.Collections;
-    using System.Diagnostics;
     using System.Threading;
     using Components.Appsettings;
     using Hardware.Sensors;
@@ -13,6 +12,7 @@ namespace KK.IH.Devices.ESP32
     using KK.IH.Devices.ESP32.Hardware.Sensors.SCD41;
     using Iot.Device.Bmxx80;
     using Iot.Device.Bmxx80.FilteringMode;
+    using KK.IH.Devices.ESP32.Utility.Debug;
 
     class Program
     {
@@ -26,6 +26,7 @@ namespace KK.IH.Devices.ESP32
 
         static void Main(string[] args)
         {
+            Logger.logLevel = Logger.LogLevel.Information;
             Init();
 
             sensorList = new ArrayList();
@@ -38,7 +39,7 @@ namespace KK.IH.Devices.ESP32
 
                 var messageContent = JsonConvert.SerializeObject(readResult);
                 //deviceClient.SendMessage(messageContent, new CancellationTokenSource(2000).Token);
-                Debug.WriteLine(messageContent);
+                Logger.Info(messageContent);
 
                 Thread.Sleep(5 * 1000);
             }

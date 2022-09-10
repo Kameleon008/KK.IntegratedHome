@@ -26,7 +26,6 @@ namespace KK.IH.Devices.ESP32
 
         static void Main(string[] args)
         {
-            Logger.logLevel = Logger.LogLevel.Information;
             Init();
 
             sensorList = new ArrayList();

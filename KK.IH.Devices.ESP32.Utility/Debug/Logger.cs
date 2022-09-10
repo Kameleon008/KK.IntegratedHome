@@ -4,13 +4,13 @@
 
     public static class Logger
     {
-        public static LogLevel logLevel = 0;
+        public static LogLevel logLevel = LogLevel.Information;
 
         public static void Trace(string message)
         {
             if (logLevel <= LogLevel.Trace)
             {
-                Console.WriteLine($"[LogLevel]: {logLevel} [Time UTC]:{DateTime.UtcNow.ToString("G")} [Trace]: {message}");
+                Console.WriteLine($"<{DateTime.UtcNow.ToString("G")}> [Trace] {message}");
             }
         }
 
@@ -18,7 +18,7 @@
         {
             if (logLevel <= LogLevel.Debug)
             {
-                Console.WriteLine($"[LogLevel]: {logLevel} [Time UTC]:{DateTime.UtcNow.ToString("G")} [Debug]: {message}");
+                Console.WriteLine($"<{DateTime.UtcNow.ToString("G")}> [Debug] {message}");
             }
         }
 
@@ -26,7 +26,7 @@
         {
             if (logLevel <= LogLevel.Information)
             {
-                Console.WriteLine($"[LogLevel]: {logLevel} [Time UTC]:{DateTime.UtcNow.ToString("G")} [Info]: {message}");
+                Console.WriteLine($"<{DateTime.UtcNow.ToString("G")}> [Info] {message}");
             }
         }
 
@@ -34,7 +34,7 @@
         {
             if (logLevel <= LogLevel.Warning)
             {
-                Console.WriteLine($"[LogLevel]: {logLevel} [Time UTC]:{DateTime.UtcNow.ToString("G")} [Warning]: {message}");
+                Console.WriteLine($"<{DateTime.UtcNow.ToString("G")}> [Warning] {message}");
             }
         }
 
@@ -42,7 +42,7 @@
         {
             if (logLevel <= LogLevel.Error)
             {
-                Console.WriteLine($"[LogLevel]: {logLevel} [Time UTC]:{DateTime.UtcNow.ToString("G")} [Error]: {message}");
+                Console.WriteLine($"<{DateTime.UtcNow.ToString("G")}> [Error] {message}");
             }
         }
 
@@ -50,7 +50,7 @@
         {
             if (logLevel <= LogLevel.Critical)
             {
-                Console.WriteLine($"[LogLevel]: {logLevel} [Time UTC]:{DateTime.UtcNow.ToString("G")} [Critical]: {message}");
+                Console.WriteLine($"<{DateTime.UtcNow.ToString("G")}> [Critical] {message}");
             }
         }
 
@@ -58,7 +58,7 @@
         {
             if (logLevel <= LogLevel.None)
             {
-                Console.WriteLine($"[LogLevel]: {logLevel} [Time UTC]:{DateTime.UtcNow.ToString("G")} [None]: {message}");
+                Console.WriteLine($"<{DateTime.UtcNow.ToString("G")}> [None] {message}");
             }
         }
 

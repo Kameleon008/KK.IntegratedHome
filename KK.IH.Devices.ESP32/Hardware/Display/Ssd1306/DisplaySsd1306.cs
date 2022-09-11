@@ -6,8 +6,11 @@ namespace KK.IH.Devices.ESP32.Hardware.Display.Ssd1306
     using System;
     using System.Device.I2c;
     using Iot.Device.Ssd13xx;
+    using KK.IH.Devices.ESP32.Components.DeviceTwin.Desired;
+    using KK.IH.Devices.ESP32.Utility.Debug;
+    using nanoFramework.Json;
 
-    public class DisplaySsd1306 : IDisplay
+    public class DisplaySsd1306 : IDisplay, IDesiredPropertiesSubscriber
     {
         private Ssd1306 _display;
         private readonly DisplaySsd1306Config _config;
@@ -31,6 +34,12 @@ namespace KK.IH.Devices.ESP32.Hardware.Display.Ssd1306
             }
         }
 
+        public void UpdateDesiredProperties(DesiredProperties desiredProperties)
+        {
+            var desiredPropertiesJson = JsonConvert.SerializeObject(desiredProperties);
+            Logger.Info($"Updated config of {this.GetType().Name} with {desiredPropertiesJson}");
+        }
+
         public void DisplayState()
         {
             throw new NotImplementedException();
@@ -47,8 +56,5 @@ namespace KK.IH.Devices.ESP32.Hardware.Display.Ssd1306
         {
             _display.Font = _config.Font;
         }
-
-
-
     }
 }

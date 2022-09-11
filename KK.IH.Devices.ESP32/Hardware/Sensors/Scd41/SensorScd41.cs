@@ -1,17 +1,21 @@
-﻿using KK.IH.Devices.ESP32.Utility.Devices.Scd41;
-using System.Collections;
-using System.Device.I2c;
-
-namespace KK.IH.Devices.ESP32.Hardware.Sensors.SCD41
+﻿namespace KK.IH.Devices.ESP32.Hardware.Sensors.SCD41
 {
-    public class SensorScd41 : ISensor
+    using KK.IH.Devices.ESP32.Components.DeviceTwin.Desired;
+    using KK.IH.Devices.ESP32.Utility.Debug;
+    using KK.IH.Devices.ESP32.Utility.Devices.Scd41;
+    using nanoFramework.Json;
+    using System.Collections;
+    using System.Device.I2c;
+    using UnitsNet.Units;
+
+    public class SensorScd41 : ISensor, IDesiredPropertiesSubscriber
     {
         private Scd41 _sensor;
-        private readonly SensorScd41Config _config;
+        private SensorScd41Config _config;
 
-        public SensorScd41(SensorScd41Config config)
+        public SensorScd41(SensorScd41ConfigTwin config)
         {
-            this._config = config;
+            this._config = SensorScd41Config.ConvertFromTwin(config);
             this.InitializeSensor();
         }
 
@@ -26,6 +30,13 @@ namespace KK.IH.Devices.ESP32.Hardware.Sensors.SCD41
             this.PrepareResultTemperature(ref resultList, sensorReadings);
 
             return resultList;
+        }
+
+        public void UpdateDesiredProperties(DesiredProperties desiredProperties)
+        {
+            var newConfiguration = SensorScd41Config.ConvertFromTwin(desiredProperties.SensorScd41Config);
+            this._config = newConfiguration;
+            Logger.Info($"Updated config of {this.GetType().Name} with {JsonConvert.SerializeObject(desiredProperties.SensorScd41Config)}");
         }
 
         private void InitializeSensor()
@@ -61,28 +72,91 @@ namespace KK.IH.Devices.ESP32.Hardware.Sensors.SCD41
 
         private SensorResult GetCo2(Scd41ReadResult result)
         {
-            var kind = "C2";
-            var value = result.Co2.Value;
-            var unit = "ParticlesPerMillion";
+            var category = "C2";
+            var co2 = new UnitsNet.VolumeConcentration(result.Co2.Value, VolumeConcentrationUnit.PartPerMillion);
+            var value = co2.As(this.ParseCo2Unit(this._config.Co2Unit));
+            var unit = this._config.Co2Unit;
 
-            return new SensorResult(kind, value, unit);
+            return new SensorResult(category, value, unit);
         }
         private SensorResult GetHumidity(Scd41ReadResult result)
         {
-            var kind = "H2";
-            var value = result.Humidity.Value;
-            var unit = "Percentage";
+            var catergory = "H2";
+            var humidity = new UnitsNet.RelativeHumidity(result.Humidity.Value, RelativeHumidityUnit.Percent);
+            var value = humidity.As(this.ParseHumidityUnit(this._config.HumidityUnit));
+            var unit = this._config.HumidityUnit;
 
-            return new SensorResult(kind, value, unit);
+            return new SensorResult(catergory, value, unit);
         }
 
         private SensorResult GetTemperature(Scd41ReadResult result)
         {
             var category = "T2";
-            var value = result.Temperature.Value;
-            var unit = "DegreeCelsius";
+            var temperature = new UnitsNet.Temperature(result.Temperature.Value, TemperatureUnit.DegreeCelsius);
+            var value = temperature.As(this.ParseTemperatureUnit(this._config.TemperatureUnit));
+            var unit = this._config.TemperatureUnit;
 
             return new SensorResult(category, value, unit);
         }
+
+        private TemperatureUnit ParseTemperatureUnit(string unitName)
+        {
+            switch (unitName)
+            {
+                case "Undefined": return TemperatureUnit.DegreeCelsius;
+                case "DegreeCelsius": return TemperatureUnit.DegreeCelsius;
+                case "DegreeDelisle": return TemperatureUnit.DegreeDelisle;
+                case "DegreeFahrenheit": return TemperatureUnit.DegreeFahrenheit;
+                case "DegreeNewton": return TemperatureUnit.DegreeNewton;
+                case "DegreeRankine": return TemperatureUnit.DegreeRankine;
+                case "DegreeReaumur": return TemperatureUnit.DegreeReaumur;
+                case "DegreeRoemer": return TemperatureUnit.DegreeRoemer;
+                case "Kelvin": return TemperatureUnit.Kelvin;
+                case "MillidegreeCelsius": return TemperatureUnit.MillidegreeCelsius;
+                case "SolarTemperature": return TemperatureUnit.SolarTemperature;
+                default: return TemperatureUnit.Undefined;
+            }
+        }
+
+        private VolumeConcentrationUnit ParseCo2Unit(string unitName)
+        {
+            switch (unitName)
+            {
+                case "Undefined": return VolumeConcentrationUnit.Undefined;
+                case "CentilitersPerLiter": return VolumeConcentrationUnit.CentilitersPerLiter;
+                case "CentilitersPerMililiter": return VolumeConcentrationUnit.CentilitersPerMililiter;
+                case "DecilitersPerLiter": return VolumeConcentrationUnit.DecilitersPerLiter;
+                case "DecilitersPerMililiter": return VolumeConcentrationUnit.DecilitersPerMililiter;
+                case "DecimalFraction": return VolumeConcentrationUnit.DecimalFraction;
+                case "LitersPerLiter": return VolumeConcentrationUnit.LitersPerLiter;
+                case "LitersPerMililiter": return VolumeConcentrationUnit.LitersPerMililiter;
+                case "MicrolitersPerLiter": return VolumeConcentrationUnit.MicrolitersPerLiter;
+                case "MicrolitersPerMililiter": return VolumeConcentrationUnit.MicrolitersPerMililiter;
+                case "MillilitersPerLiter": return VolumeConcentrationUnit.MillilitersPerLiter;
+                case "MillilitersPerMililiter": return VolumeConcentrationUnit.MillilitersPerMililiter;
+                case "NanolitersPerLiter": return VolumeConcentrationUnit.NanolitersPerLiter;
+                case "NanolitersPerMililiter": return VolumeConcentrationUnit.NanolitersPerMililiter;
+                case "PartPerBillion": return VolumeConcentrationUnit.PartPerBillion;
+                case "PartPerMillion": return VolumeConcentrationUnit.PartPerMillion;
+                case "PartPerThousand": return VolumeConcentrationUnit.PartPerThousand;
+                case "PartPerTrillion": return VolumeConcentrationUnit.PartPerTrillion;
+                case "Percent": return VolumeConcentrationUnit.Percent;
+                case "PicolitersPerLiter": return VolumeConcentrationUnit.PicolitersPerLiter;
+                case "PicolitersPerMililiter": return VolumeConcentrationUnit.PicolitersPerMililiter;
+                default: return VolumeConcentrationUnit.Undefined;
+            }
+        }
+
+        private RelativeHumidityUnit ParseHumidityUnit(string unitName)
+        {
+            switch (unitName)
+            {
+                case "Undefined": return RelativeHumidityUnit.Undefined;
+                case "Percent": return RelativeHumidityUnit.Percent;
+                default: return RelativeHumidityUnit.Undefined;
+            }
+        }
+
+
     }
 }

@@ -9,16 +9,16 @@ namespace KK.IH.Devices.ESP32.Providers
 {
     static class ClientProvider
     {
-        public static void ProvideIotHubConnection(IAppsettings appsettings, ref DeviceClient client)
+        public static DeviceClient ProvideIotHubConnection(IAppsettings appsettings)
         {
             if (WifiNetworkHelper.Status != NetworkHelperStatus.NetworkIsReady)
             {
                 Logger.Info($"Wifi network is not ready, actual state: {WifiNetworkHelper.Status}");
-                return;
+                return null;
             }
 
             var azureRootCACert = new X509Certificate(Resources.GetBytes(Resources.BinaryResources.AzureRoot));
-            client = new DeviceClient(appsettings.IotHubAddress, appsettings.DeviceId, appsettings.DeviceSasKey, azureCert: azureRootCACert);
+            var client = new DeviceClient(appsettings.IotHubAddress, appsettings.DeviceId, appsettings.DeviceSasKey, azureCert: azureRootCACert);
             try
             {
                 client.Open();
@@ -29,6 +29,8 @@ namespace KK.IH.Devices.ESP32.Providers
                 Logger.Error($"Could not open connection to Azure IoTHub on address: {appsettings.IotHubAddress}");
                 Logger.Error($"Exception message {ex.Message}");
             }
+
+            return client;
         }
     }
 }

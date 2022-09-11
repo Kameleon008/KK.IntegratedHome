@@ -19,10 +19,19 @@
   </PropertyGroup>
   <Import Project="$(NanoFrameworkProjectSystemPath)NFProjectSystem.props" Condition="Exists('$(NanoFrameworkProjectSystemPath)NFProjectSystem.props')" />
   <ItemGroup>
+    <Compile Include="Hardware\Sensors\Bmp280\SensorBmp280ConfigTwin.cs" />
+    <Compile Include="Hardware\Sensors\Scd41\SensorScd41ConfigTwin.cs" />
+    <Compile Include="SomeObject.cs" />
     <Compile Include="Components\Appsettings\Appsettings.cs" />
     <Compile Include="Components\Appsettings\AppsettingsManager.cs" />
     <Compile Include="Components\Appsettings\IAppsettingsManager.cs" />
     <Compile Include="Components\Appsettings\IAppsettings.cs" />
+    <Compile Include="Components\DeviceTwin\Desired\IDesiredPropertiesPublisher.cs" />
+    <Compile Include="Components\DeviceTwin\Desired\IDesiredPropertiesSubscriber.cs" />
+    <Compile Include="Components\DeviceTwin\Desired\DesiredProperties.cs" />
+    <Compile Include="Components\DeviceTwin\DeviceTwinManager.cs" />
+    <Compile Include="Components\DeviceTwin\Reported\ResportedProperties.cs" />
+    <Compile Include="Components\Device\DeviceManager.cs" />
     <Compile Include="Hardware\Display\IDisplay.cs" />
     <Compile Include="Hardware\Display\Ssd1306\DisplaySsd1306Converter.cs" />
     <Compile Include="Hardware\Display\Ssd1306\DisplaySsd1306Config.cs" />
@@ -189,6 +198,11 @@
     </Reference>
     <Reference Include="UnitsNet.Temperature, Version=4.143.0.0, Culture=neutral, PublicKeyToken=null">
       <HintPath>..\packages\UnitsNet.nanoFramework.Temperature.4.143.0\lib\UnitsNet.Temperature.dll</HintPath>
+      <Private>True</Private>
+      <SpecificVersion>True</SpecificVersion>
+    </Reference>
+    <Reference Include="UnitsNet.VolumeConcentration, Version=4.143.0.0, Culture=neutral, PublicKeyToken=null">
+      <HintPath>..\packages\UnitsNet.nanoFramework.VolumeConcentration.4.143.0\lib\UnitsNet.VolumeConcentration.dll</HintPath>
       <Private>True</Private>
       <SpecificVersion>True</SpecificVersion>
     </Reference>

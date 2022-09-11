@@ -18,11 +18,11 @@ namespace KK.IH.Devices.ESP32.FileManager
             Logger.Info($"Serializing file \"{fileName}\"");
             var appsettings = new AppsettingsModel()
             {
-                WifiName = "Matejki-182",
-                WifiPassword = "Omska_15",
-                DeviceId = "esp32",
-                DeviceSasKey = "7JDu68aTB6Q5dm2h5das5AYRPpaGC30JXt1qdJF5jUo=",
-                IotHubAddress = "kkihiothub.azure-devices.net",
+                WifiName = "{WifiName}",
+                WifiPassword = "{WifiPassword}",
+                DeviceId = "{DeviceId}",
+                DeviceSasKey = "{DeviceSasKey}",
+                IotHubAddress = "{IotHubAddress}",
             };
 
             string json = JsonConvert.SerializeObject(appsettings);

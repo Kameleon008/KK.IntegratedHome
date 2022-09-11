@@ -13,46 +13,74 @@ namespace KK.IH.Devices.ESP32
     using Iot.Device.Bmxx80;
     using Iot.Device.Bmxx80.FilteringMode;
     using KK.IH.Devices.ESP32.Utility.Debug;
+    using KK.IH.Devices.ESP32.Components.DeviceTwin;
+    using KK.IH.Devices.ESP32.Components.Device;
+    using KK.IH.Devices.ESP32.Components.DeviceTwin.Desired;
 
     class Program
     {
-        static IAppsettings appsettings;
-        static IAppsettingsManager appsettingsManager;
+        static Appsettings appsettings;
 
-        static DeviceClient deviceClient;
+        static AppsettingsManager appsettingsManager;
 
-        static IList sensorList;
+        static DeviceManager deviceManager;
+
+        static DeviceTwinManager deviceTwinManager;
+
+        static IList sensorList = new ArrayList();
 
 
         static void Main(string[] args)
         {
-            Init();
-
-            sensorList = new ArrayList();
-            sensorList.Add(InitializeSensorBmp280());
-            sensorList.Add(InitializeSensorScd41());
+            InitHardware();
+            InitAppsettings();
+            InitComponents();
+            InitSensors();
 
             while (true)
             {
                 var readResult = GetMeasurement();
 
                 var messageContent = JsonConvert.SerializeObject(readResult);
-                //deviceClient.SendMessage(messageContent, new CancellationTokenSource(2000).Token);
-                Logger.Info(messageContent);
-
-                Thread.Sleep(5 * 1000);
+                deviceManager.Client.SendMessage(messageContent, new CancellationTokenSource(2000).Token);
+                Logger.Info($"Message: {messageContent}");
+                Thread.Sleep(deviceTwinManager.DesiredProperties.SendInterval);
             }
-
         }
 
-        static void Init()
+        private static void DeviceClient_TwinUpdated(object sender, nanoFramework.Azure.Devices.Shared.TwinUpdateEventArgs updateTwinEvent)
+        {
+            var twinString = JsonConvert.SerializeObject(updateTwinEvent.Twin);
+            Logger.Info(twinString);
+        }
+
+        private static void InitHardware()
+        {
+            Controler.ConfigurePeripherials();
+        }
+
+        private static void InitAppsettings()
         {
             appsettingsManager = new AppsettingsManager();
             appsettings = appsettingsManager.GetAppsettings();
+        }
 
-            NetworkProvider.ProvideWifiConnection(appsettings);
-            ClientProvider.ProvideIotHubConnection(appsettings, ref deviceClient);
-            Controler.ConfigurePeripherials();
+        private static void InitComponents()
+        {
+            deviceManager = new DeviceManager(appsettings);
+            deviceTwinManager = new DeviceTwinManager(deviceManager.Client);
+        }
+
+        private static void InitSensors()
+        {
+            sensorList.Add(InitializeSensorBmp280());
+            sensorList.Add(InitializeSensorScd41());
+
+            foreach (var sensor in sensorList)
+            {
+                var subscriber = (IDesiredPropertiesSubscriber)sensor;
+                deviceTwinManager.AddDesiredPropertiesSubscriber(subscriber);
+            }
         }
 
 
@@ -71,43 +99,15 @@ namespace KK.IH.Devices.ESP32
             return readResult;
         }
 
-        //void InitializeInterfaceI2C()
-        //{
-        //    Configuration.SetPinFunction(21, DeviceFunction.I2C1_DATA);
-        //    Configuration.SetPinFunction(22, DeviceFunction.I2C1_CLOCK);
-        //}
-
         static ISensor InitializeSensorBmp280()
         {
-
-            // TODO
-            // implement load config from device twin in IoT Hub 
-
-            var config = new SensorBmp280Config()
-            {
-                PressureSampling = Sampling.HighResolution,
-                TemperatureSampling = Sampling.HighResolution,
-                FilteringMode = Bmx280FilteringMode.X2,
-                PressureUnit = "Hectopascal",
-                TemperatureUnit = "DegreeCelsius",
-                StandbyTime = StandbyTime.Ms1000,
-                I2cBusId = 1,
-                I2CAddress = Bmx280Base.SecondaryI2cAddress,
-            };
-
-            var sensorBmp280 = new SensorBmp280(config);
+            var sensorBmp280 = new SensorBmp280(deviceTwinManager.DesiredProperties.SensorBmp280Config);
             return sensorBmp280;
         }
 
         static ISensor InitializeSensorScd41()
         {
-            var config = new SensorScd41Config()
-            {
-                I2cBusId = 1,
-                I2CAddress = 0x62,
-            };
-
-            var sensorScd41 = new SensorScd41(config);
+            var sensorScd41 = new SensorScd41(deviceTwinManager.DesiredProperties.SensorScd41Config);
             return sensorScd41;
         }
 

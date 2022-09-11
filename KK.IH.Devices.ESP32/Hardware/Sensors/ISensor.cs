@@ -1,8 +1,6 @@
-﻿using System.Collections;
-
-namespace KK.IH.Devices.ESP32.Hardware.Sensors
+﻿namespace KK.IH.Devices.ESP32.Hardware.Sensors
 {
-    using System.Collections.Generic;
+    using System.Collections;
 
     public interface ISensor
     {

@@ -2,22 +2,23 @@
 {
     using System.Collections;
     using System.Device.I2c;
-    using System.Diagnostics;
     using Iot.Device.Bmxx80;
     using Iot.Device.Bmxx80.ReadResult;
+    using KK.IH.Devices.ESP32.Components.DeviceTwin.Desired;
+    using KK.IH.Devices.ESP32.Utility.Debug;
     using nanoFramework.Json;
     using UnitsNet.Units;
 
-    class SensorBmp280 : ISensor
+    class SensorBmp280 : ISensor, IDesiredPropertiesSubscriber
     {
         private Bmp280 _sensor;
-        private readonly SensorBmp280Config _config;
+        private SensorBmp280Config _config;
 
-        public SensorBmp280(SensorBmp280Config config)
+        public SensorBmp280(SensorBmp280ConfigTwin config)
         {
-            this._config = config;
+            this._config = SensorBmp280Config.ConvertFromTwin(config); ;
             this.InitializeSensor();
-            this.ConfigureSensor();
+            this.UpdateSensorConfiguration();
         }
 
         public IList GetMeasurements()
@@ -32,6 +33,14 @@
             return resultList;
         }
 
+        public void UpdateDesiredProperties(DesiredProperties desiredProperties)
+        {
+            var newConfiguration = SensorBmp280Config.ConvertFromTwin(desiredProperties.SensorBmp280Config);
+            this._config = newConfiguration;
+            this.UpdateSensorConfiguration();
+            Logger.Info($"Updated config of {this.GetType().Name} with {JsonConvert.SerializeObject(desiredProperties.SensorBmp280Config)}");
+        }
+
         private void InitializeSensor()
         {
             var i2cSettings = new I2cConnectionSettings(_config.I2cBusId, _config.I2CAddress);
@@ -39,7 +48,7 @@
             this._sensor = new Bmp280(i2cDevice);
         }
 
-        private void ConfigureSensor()
+        private void UpdateSensorConfiguration()
         {
             _sensor.FilterMode = this._config.FilteringMode;
             _sensor.StandbyTime = this._config.StandbyTime;
@@ -74,11 +83,11 @@
 
         private SensorResult GetPressure(Bmp280ReadResult result)
         {
-            var kind = "P1";
+            var category = "P1";
             var value = result.Pressure.As(this.ParsePressureUnit(this._config.PressureUnit));
             var unit = this._config.PressureUnit;
 
-            return new SensorResult(kind, value, unit);
+            return new SensorResult(category, value, unit);
         }
 
         private TemperatureUnit ParseTemperatureUnit(string unitName)

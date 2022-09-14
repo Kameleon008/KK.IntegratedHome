@@ -10,7 +10,6 @@
 
         public DeviceManager(IAppsettings appsettings)
         {
-            NetworkProvider.ProvideWifiConnection(appsettings);
             this.Client = ClientProvider.ProvideIotHubConnection(appsettings);
         }
     }

@@ -13,9 +13,9 @@
         private Scd41 _sensor;
         private SensorScd41Config _config;
 
-        public SensorScd41(SensorScd41ConfigTwin config)
+        public SensorScd41(DesiredProperties desired)
         {
-            this._config = SensorScd41Config.ConvertFromTwin(config);
+            this._config = SensorScd41Config.ConvertFromTwin(desired.SensorScd41Config);
             this.InitializeSensor();
         }
 

@@ -14,9 +14,9 @@
         private Bmp280 _sensor;
         private SensorBmp280Config _config;
 
-        public SensorBmp280(SensorBmp280ConfigTwin config)
+        public SensorBmp280(DesiredProperties desired)
         {
-            this._config = SensorBmp280Config.ConvertFromTwin(config); ;
+            this._config = SensorBmp280Config.ConvertFromTwin(desired.SensorBmp280Config); ;
             this.InitializeSensor();
             this.UpdateSensorConfiguration();
         }

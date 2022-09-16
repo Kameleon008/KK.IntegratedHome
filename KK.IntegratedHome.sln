@@ -9,6 +9,8 @@ Project("{11A8DD76-328B-46DF-9F39-F559912D0360}") = "KK.IH.Devices.ESP32.Utility
 EndProject
 Project("{11A8DD76-328B-46DF-9F39-F559912D0360}") = "KK.IH.Devices.ESP32.FileManager", "KK.IH.Devices.ESP32.FileManager\KK.IH.Devices.ESP32.FileManager.nfproj", "{1D260334-83D0-416E-9069-2107867061AF}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Device", "Device", "{F832AC99-7A2F-486D-92EC-32F9867DBF5A}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -36,6 +38,11 @@ Global
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{6A77EFF5-D85F-4972-9AAA-790B22C3EA7F} = {F832AC99-7A2F-486D-92EC-32F9867DBF5A}
+		{A1A5D128-296D-4BA2-A0D6-F1C9D4D1BB0D} = {F832AC99-7A2F-486D-92EC-32F9867DBF5A}
+		{1D260334-83D0-416E-9069-2107867061AF} = {F832AC99-7A2F-486D-92EC-32F9867DBF5A}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {6C5D9705-DD4D-4171-B4F9-7DCA889F674E}

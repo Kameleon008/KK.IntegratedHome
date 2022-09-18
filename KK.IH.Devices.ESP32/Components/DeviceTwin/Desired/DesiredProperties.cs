@@ -17,11 +17,32 @@
 
         public void UpdateFromTwinCollection(TwinCollection twinCollection)
         {
-            var deserialized = (DesiredProperties)JsonConvert.DeserializeObject(twinCollection.ToJson(), this.GetType());
-            this.State = deserialized.State;
-            this.SendInterval = deserialized.SendInterval;
-            this.SensorBmp280Config = deserialized.SensorBmp280Config;
-            this.SensorScd41Config = deserialized.SensorScd41Config;
+            var twinColectionSerialized = this.Serialize(twinCollection);
+            var deserialized = this.Deserialize(twinColectionSerialized);
+            var casted = this.Convert(deserialized);
+
+            this.State = casted.State;
+            this.SendInterval = casted.SendInterval;
+            this.SensorBmp280Config = casted.SensorBmp280Config;
+            this.SensorScd41Config = casted.SensorScd41Config;
+        }
+
+        private string Serialize(TwinCollection twinCollection)
+        {
+            var result = twinCollection.ToJson();
+            return result;
+        }
+
+        private object Deserialize(string toDeserialize)
+        {
+            var result = JsonConvert.DeserializeObject(toDeserialize, this.GetType());
+            return result;
+        }
+
+        private DesiredProperties Convert(object toConvert)
+        {
+            var result = (DesiredProperties)toConvert;
+            return result;
         }
     }
 }

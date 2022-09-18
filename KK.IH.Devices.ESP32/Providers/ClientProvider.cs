@@ -9,7 +9,7 @@ namespace KK.IH.Devices.ESP32.Providers
 {
     static class ClientProvider
     {
-        public static DeviceClient ProvideIotHubConnection(IAppsettings appsettings)
+        public static DeviceClient ProvideIotHubConnection(Appsettings appsettings)
         {
             if (WifiNetworkHelper.Status != NetworkHelperStatus.NetworkIsReady)
             {
@@ -17,7 +17,7 @@ namespace KK.IH.Devices.ESP32.Providers
                 return null;
             }
 
-            var azureRootCACert = new X509Certificate(Resources.GetBytes(Resources.BinaryResources.AzureRoot));
+            var azureRootCACert = new X509Certificate(Resource.GetBytes(Resource.BinaryResources.AzureRoot));
             var client = new DeviceClient(appsettings.IotHubAddress, appsettings.DeviceId, appsettings.DeviceSasKey, azureCert: azureRootCACert);
             try
             {

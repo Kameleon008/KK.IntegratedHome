@@ -13,6 +13,7 @@ namespace KK.IH.Devices.ESP32
     using KK.IH.Devices.ESP32.Components.DeviceTwin;
     using KK.IH.Devices.ESP32.Components.Device;
     using KK.IH.Devices.ESP32.Components.DeviceTwin.Desired;
+    using KK.IH.Devices.ESP32.Utility.FileManager;
 
     class Program
     {

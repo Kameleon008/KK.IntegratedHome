@@ -1,42 +1,27 @@
-namespace KK.IH.Devices.ESP32.FileManager
+﻿namespace KK.IH.Devices.ESP32.Utility.FileManager
 {
     using System.IO;
     using System.Text;
     using nanoFramework.Json;
-    using KK.IH.Devices.ESP32.FileManager.Models;
     using KK.IH.Devices.ESP32.Utility.Debug;
+    using System;
 
-    public class Program
+    public static class Manager
     {
-
-        public static void Main()
+        public static void SaveFile(byte[] appsettings, Type type)
         {
-
             string fileName = $"appsettings.json";
             string filePath = $"I:\\{fileName}";
 
             Logger.Info($"Serializing file \"{fileName}\"");
-            var appsettings = new AppsettingsModel()
-            {
-                WifiName = "{WifiName}",
-                WifiPassword = "{WifiPassword}",
-                DeviceId = "{DeviceId}",
-                DeviceSasKey = "{DeviceSasKey}",
-                IotHubAddress = "{IotHubAddress}",
-            };
-
-            string json = JsonConvert.SerializeObject(appsettings);
-            Logger.Info($"Serialized content: {json}");
-
-
-            Logger.Info($"Writing content to \"{filePath}\"");
+            var fromFile = Encoding.UTF8.GetString(appsettings, 0, appsettings.Length);
+            var deserialized2 = JsonConvert.DeserializeObject(fromFile.Substring(1), type);
+            var byteBuffer = Encoding.UTF8.GetBytes(JsonConvert.SerializeObject(deserialized2));
+            
             File.Create(filePath);
-            byte[] sampleBuffer = Encoding.UTF8.GetBytes(json);
             FileStream fs = new FileStream(filePath, FileMode.Open, FileAccess.ReadWrite);
-            fs.Write(sampleBuffer, 0, sampleBuffer.Length);
+            fs.Write(byteBuffer, 0, byteBuffer.Length);
             fs.Close();
-
-
 
             Logger.Info($"Reading content from \"{filePath}\"");
             FileStream fs2 = new FileStream(filePath, FileMode.Open, FileAccess.Read);

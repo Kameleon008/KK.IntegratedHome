@@ -8,7 +8,7 @@
     {
         public DeviceClient Client { get; private set; }
 
-        public DeviceManager(IAppsettings appsettings)
+        public DeviceManager(Appsettings appsettings)
         {
             this.Client = ClientProvider.ProvideIotHubConnection(appsettings);
         }

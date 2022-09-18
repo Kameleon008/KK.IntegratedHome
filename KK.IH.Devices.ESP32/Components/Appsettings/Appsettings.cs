@@ -1,6 +1,6 @@
 ﻿namespace KK.IH.Devices.ESP32.Components.Appsettings
 {
-    public class Appsettings: IAppsettings
+    public class Appsettings
     {
         public string IotHubAddress { get; set; }
 

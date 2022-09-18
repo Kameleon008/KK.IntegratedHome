@@ -68,10 +68,8 @@
 
         private void GetActualDesiredProperties()
         {
-            var twinDesired = this.deviceClient.GetTwin().Properties.Desired;
-            Thread.Sleep(100);
-            Logger.Info($"Received Desired Properties {twinDesired.ToJson()}");
-            this.DesiredProperties.UpdateFromTwinCollection(twinDesired);
+            var twin = this.deviceClient.GetTwin();
+            this.DesiredProperties.UpdateFromTwinCollection(twin.Properties.Desired);
         }
 
         private void SetUpdatedDesiredPropertiesHandler()

@@ -11,27 +11,28 @@
 namespace KK.IH.Devices.ESP32
 {
     
-    internal partial class Resources
+    internal partial class Resource
     {
         private static System.Resources.ResourceManager manager;
         internal static System.Resources.ResourceManager ResourceManager
         {
             get
             {
-                if ((Resources.manager == null))
+                if ((Resource.manager == null))
                 {
-                    Resources.manager = new System.Resources.ResourceManager("KK.IH.Devices.ESP32.Resources", typeof(Resources).Assembly);
+                    Resource.manager = new System.Resources.ResourceManager("KK.IH.Devices.ESP32.Resource", typeof(Resource).Assembly);
                 }
-                return Resources.manager;
+                return Resource.manager;
             }
         }
-        internal static byte[] GetBytes(Resources.BinaryResources id)
+        internal static byte[] GetBytes(Resource.BinaryResources id)
         {
             return ((byte[])(nanoFramework.Runtime.Native.ResourceUtility.GetObject(ResourceManager, id)));
         }
         [System.SerializableAttribute()]
         internal enum BinaryResources : short
         {
+            Appsettings = -20893,
             AzureRoot = 22997,
         }
     }

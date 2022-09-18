@@ -9,7 +9,7 @@
     {
         private static int WifiConnectingTimeoutMs = 60000;
 
-        public static void ProvideWifiConnection(IAppsettings appsettings)
+        public static void ProvideWifiConnection(Appsettings appsettings)
         {
             CancellationTokenSource cs = new(WifiConnectingTimeoutMs);
             var success = WifiNetworkHelper.ConnectDhcp(appsettings.WifiName, appsettings.WifiPassword, requiresDateTime: true, token: cs.Token);

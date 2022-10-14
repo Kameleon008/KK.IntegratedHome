@@ -1,11 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace KK.IH.Tools.Database.PostgresClient
+﻿namespace KK.IH.Database.PostgresClient.Models
 {
+    using System;
+
     public class Device
     {
         public int Id { get; set; }

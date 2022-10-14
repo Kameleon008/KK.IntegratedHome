@@ -1,11 +1,8 @@
-﻿using System.IO;
-using Microsoft.EntityFrameworkCore;
-using Microsoft.EntityFrameworkCore.Design;
-using Microsoft.Extensions.Configuration;
-
-
-namespace KK.IH.Tools.Database.PostgresClient
+﻿namespace KK.IH.Tools.Database.PostgresClient
 {
+    using Microsoft.EntityFrameworkCore;
+    using Microsoft.EntityFrameworkCore.Design;
+
     internal class DiogelContextFactory : IDesignTimeDbContextFactory<DatabaseContext>
     {
         public DatabaseContext CreateDbContext(string[] args)

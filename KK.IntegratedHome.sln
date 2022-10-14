@@ -15,6 +15,8 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Api", "Api", "{F1FAEE43-60C
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "KK.IH.Database.PostgresClient", "KK.IH.Database.PostgresClient\KK.IH.Database.PostgresClient.csproj", "{8C0F095C-9D25-48D7-889F-E66781F1B022}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "KK.IH.Api.DatabaseApi", "KK.IH.Api.DatabaseApi\KK.IH.Api.DatabaseApi.csproj", "{70EB69FB-E362-4658-8D7B-C50C40678C24}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -37,6 +39,10 @@ Global
 		{8C0F095C-9D25-48D7-889F-E66781F1B022}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{8C0F095C-9D25-48D7-889F-E66781F1B022}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{8C0F095C-9D25-48D7-889F-E66781F1B022}.Release|Any CPU.Build.0 = Release|Any CPU
+		{70EB69FB-E362-4658-8D7B-C50C40678C24}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{70EB69FB-E362-4658-8D7B-C50C40678C24}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{70EB69FB-E362-4658-8D7B-C50C40678C24}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{70EB69FB-E362-4658-8D7B-C50C40678C24}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -45,6 +51,7 @@ Global
 		{6A77EFF5-D85F-4972-9AAA-790B22C3EA7F} = {F832AC99-7A2F-486D-92EC-32F9867DBF5A}
 		{A1A5D128-296D-4BA2-A0D6-F1C9D4D1BB0D} = {F832AC99-7A2F-486D-92EC-32F9867DBF5A}
 		{8C0F095C-9D25-48D7-889F-E66781F1B022} = {38F65984-39BC-46CB-87C4-763FB3ED7C0C}
+		{70EB69FB-E362-4658-8D7B-C50C40678C24} = {F1FAEE43-60CB-4617-AC64-7CDA6BA4CC34}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {6C5D9705-DD4D-4171-B4F9-7DCA889F674E}

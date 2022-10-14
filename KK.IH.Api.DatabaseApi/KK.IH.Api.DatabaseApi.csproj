@@ -1,8 +1,22 @@
 <Project Sdk="Microsoft.NET.Sdk.Web">
 
   <PropertyGroup>
-    <TargetFramework>netcoreapp3.1</TargetFramework>
+    <TargetFramework>net6.0</TargetFramework>
+    <UserSecretsId>6e7b697f-f76c-41f8-b368-7c13dd635357</UserSecretsId>
   </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Microsoft.EntityFrameworkCore.Tools" Version="6.0.10">
+      <PrivateAssets>all</PrivateAssets>
+      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+    </PackageReference>
+    <PackageReference Include="Npgsql.EntityFrameworkCore.PostgreSQL" Version="6.0.7" />
+    <PackageReference Include="NSwag.AspNetCore" Version="13.17.0" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="Components\" />
+  </ItemGroup>
 
 
 </Project>

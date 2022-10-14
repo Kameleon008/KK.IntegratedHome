@@ -1,7 +1,7 @@
 namespace KK.IH.Api.DatabaseApi
 {
     using KK.IH.Api.DatabaseApi.Consts;
-    using KK.IH.Api.DatabaseApi.Database;
+    using KK.IH.Database.PostgresMigration;
     using Microsoft.AspNetCore.Builder;
     using Microsoft.AspNetCore.Hosting;
     using Microsoft.EntityFrameworkCore;

@@ -1,11 +1,10 @@
-﻿namespace KK.IH.Tools.Database.PostgresClient
+﻿namespace KK.IH.Database.PostgresMigration
 {
-    using KK.IH.Api.DatabaseApi;
     using KK.IH.Api.DatabaseApi.Consts;
-    using KK.IH.Api.DatabaseApi.Database;
     using Microsoft.EntityFrameworkCore;
     using Microsoft.EntityFrameworkCore.Design;
     using Microsoft.Extensions.Configuration;
+    using Microsoft.Extensions.Configuration.Json;
 
     internal class DatabaseContextFactory : IDesignTimeDbContextFactory<DatabaseContext>
     {
@@ -13,14 +12,14 @@
 
         public DatabaseContextFactory()
         {
-            this.configuration = this.ConfigureDatabaseContextFactory();
+            configuration = ConfigureDatabaseContextFactory();
         }
 
         public DatabaseContext CreateDbContext(string[] args)
         {
             var dbContextOptionsBuilder = new DbContextOptionsBuilder<DatabaseContext>();
 
-            dbContextOptionsBuilder.UseNpgsql(this.configuration.GetSection($"{Appsettings.PostgresClient}:{Appsettings.ConnectionString}").Get<string>());
+            dbContextOptionsBuilder.UseNpgsql(configuration.GetSection($"{Appsettings.PostgresClient}:{Appsettings.ConnectionString}").Get<string>());
             return new DatabaseContext(dbContextOptionsBuilder.Options);
         }
 
@@ -28,7 +27,7 @@
         {
             var configBuilder = new ConfigurationBuilder();
             configBuilder.AddJsonFile($"appsettings.json", optional: false);
-            configBuilder.AddUserSecrets<Program>();
+            configBuilder.AddUserSecrets<DatabaseContextFactory>();
             return configBuilder.Build();
         }
     }

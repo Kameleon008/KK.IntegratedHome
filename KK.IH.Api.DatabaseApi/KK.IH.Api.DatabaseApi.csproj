@@ -18,5 +18,9 @@
     <Folder Include="Components\" />
   </ItemGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\KK.IH.Database.PostgresMigration\KK.IH.Database.PostgresMigration.csproj" />
+  </ItemGroup>
+
 
 </Project>

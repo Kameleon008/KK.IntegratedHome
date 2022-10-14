@@ -1,4 +1,4 @@
-﻿namespace KK.IH.Api.DatabaseApi.Database
+﻿namespace KK.IH.Database.PostgresMigration
 {
     using KK.IH.Api.DatabaseApi.Models;
     using Microsoft.EntityFrameworkCore;

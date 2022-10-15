@@ -17,7 +17,7 @@ namespace KK.IH.Api.DatabaseApi
                 {
                     configBuilder.AddJsonFile($"appsettings.json", optional: false);
                     configBuilder.AddJsonFile($"appsettings.{context.HostingEnvironment.EnvironmentName}.json", optional: true);
-                    //configBuilder.AddUserSecrets<Program>(true);
+                    configBuilder.AddUserSecrets<Program>(true);
                 })
                 .ConfigureWebHostDefaults(webBuilder =>
                 {

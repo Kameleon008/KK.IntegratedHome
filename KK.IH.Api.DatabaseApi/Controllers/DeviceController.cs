@@ -1,39 +1,44 @@
 ﻿namespace KK.IH.Api.DatabaseApi.Controllers
 {
+    using KK.IH.Api.DatabaseApi.CQRS.DeviceCQRS.GetAll;
+    using MediatR;
     using Microsoft.AspNetCore.Mvc;
-    using System.Collections.Generic;
-    
+    using System.Threading.Tasks;
+
     [Route("api/[controller]")]
     [ApiController]
-    public class ValuesController : ControllerBase
+    public class DeviceController : ControllerBase
     {
-        // GET: api/<ValuesController>
-        [HttpGet]
-        public IEnumerable<string> Get()
+        private IMediator mediator;
+
+        public DeviceController(IMediator mediator)
         {
-            return new string[] { "value1", "value2" };
+            this.mediator = mediator;
         }
 
-        // GET api/<ValuesController>/5
+        [HttpGet]
+        public async Task<GetAllDeviceResponse> GetAll([FromQuery] GetAllDeviceRequest request)
+        {
+            var response = await this.mediator.Send(request);
+            return response;
+        }
+
         [HttpGet("{id}")]
         public string Get(int id)
         {
             return "value";
         }
 
-        // POST api/<ValuesController>
         [HttpPost]
         public void Post([FromBody] string value)
         {
         }
 
-        // PUT api/<ValuesController>/5
         [HttpPut("{id}")]
         public void Put(int id, [FromBody] string value)
         {
         }
 
-        // DELETE api/<ValuesController>/5
         [HttpDelete("{id}")]
         public void Delete(int id)
         {

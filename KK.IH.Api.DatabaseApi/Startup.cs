@@ -1,5 +1,6 @@
 namespace KK.IH.Api.DatabaseApi
 {
+    using MediatR;
     using KK.IH.Api.DatabaseApi.Consts;
     using KK.IH.Database.PostgresMigration;
     using Microsoft.AspNetCore.Builder;
@@ -25,6 +26,7 @@ namespace KK.IH.Api.DatabaseApi
             {
                 options.UseNpgsql(this.Configuration.GetSection($"{Appsettings.PostgresClient}:{Appsettings.ConnectionString}").Get<string>());
             });
+            services.AddMediatR(typeof(Startup).Assembly);
             services.AddControllers();
         }
 

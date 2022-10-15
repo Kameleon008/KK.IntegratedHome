@@ -4,7 +4,6 @@
     using Microsoft.EntityFrameworkCore;
     using Microsoft.EntityFrameworkCore.Design;
     using Microsoft.Extensions.Configuration;
-    using Microsoft.Extensions.Configuration.Json;
 
     internal class DatabaseContextFactory : IDesignTimeDbContextFactory<DatabaseContext>
     {
@@ -19,7 +18,7 @@
         {
             var dbContextOptionsBuilder = new DbContextOptionsBuilder<DatabaseContext>();
 
-            dbContextOptionsBuilder.UseNpgsql(configuration.GetSection($"{Appsettings.PostgresClient}:{Appsettings.ConnectionString}").Get<string>());
+            dbContextOptionsBuilder.UseNpgsql(configuration.GetSection($"{DatabaseConfiguration.PostgresClient}:{DatabaseConfiguration.ConnectionString}").Get<string>());
             return new DatabaseContext(dbContextOptionsBuilder.Options);
         }
 

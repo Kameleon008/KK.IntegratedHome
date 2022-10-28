@@ -1,5 +1,5 @@
 ## Uninstall previous release
-helm uninstall prometheus
+helm uninstall prometheus --wait
 
 ## Package chart
 helm package ./../Helm/prometheus

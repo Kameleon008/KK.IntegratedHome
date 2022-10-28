@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio Version 17
-VisualStudioVersion = 17.0.31919.166
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.31727.386
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{11A8DD76-328B-46DF-9F39-F559912D0360}") = "KK.IH.Devices.ESP32", "KK.IH.Devices.ESP32\KK.IH.Devices.ESP32.nfproj", "{6A77EFF5-D85F-4972-9AAA-790B22C3EA7F}"
 EndProject
@@ -11,11 +11,15 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Device", "Device", "{F832AC
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Api", "Api", "{F1FAEE43-60CB-4617-AC64-7CDA6BA4CC34}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "KK.IH.Api.DatabaseApi", "KK.IH.Api.DatabaseApi\KK.IH.Api.DatabaseApi.csproj", "{70EB69FB-E362-4658-8D7B-C50C40678C24}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "KK.IH.Api.DatabaseApi", "KK.IH.Api.DatabaseApi\KK.IH.Api.DatabaseApi.csproj", "{70EB69FB-E362-4658-8D7B-C50C40678C24}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Database", "Database", "{FA4E42F0-D50B-48F0-AD3A-5C872219A753}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "KK.IH.Database.PostgresMigration", "KK.IH.Database.PostgresMigration\KK.IH.Database.PostgresMigration.csproj", "{4DACA1DF-CE1E-4D69-9063-3A469C79E27F}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "KK.IH.Database.PostgresMigration", "KK.IH.Database.PostgresMigration\KK.IH.Database.PostgresMigration.csproj", "{4DACA1DF-CE1E-4D69-9063-3A469C79E27F}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Sources", "Sources", "{70D3AA6C-1ED0-4D4B-9370-8C3C1D10BC2F}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "KK.IH.Source.EventHub", "KK.IH.Source.EventHub\KK.IH.Source.EventHub.csproj", "{D6A6D94B-4D08-4B6A-9356-260D6730837F}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -43,6 +47,10 @@ Global
 		{4DACA1DF-CE1E-4D69-9063-3A469C79E27F}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{4DACA1DF-CE1E-4D69-9063-3A469C79E27F}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{4DACA1DF-CE1E-4D69-9063-3A469C79E27F}.Release|Any CPU.Build.0 = Release|Any CPU
+		{D6A6D94B-4D08-4B6A-9356-260D6730837F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D6A6D94B-4D08-4B6A-9356-260D6730837F}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D6A6D94B-4D08-4B6A-9356-260D6730837F}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{D6A6D94B-4D08-4B6A-9356-260D6730837F}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -52,6 +60,7 @@ Global
 		{A1A5D128-296D-4BA2-A0D6-F1C9D4D1BB0D} = {F832AC99-7A2F-486D-92EC-32F9867DBF5A}
 		{70EB69FB-E362-4658-8D7B-C50C40678C24} = {F1FAEE43-60CB-4617-AC64-7CDA6BA4CC34}
 		{4DACA1DF-CE1E-4D69-9063-3A469C79E27F} = {FA4E42F0-D50B-48F0-AD3A-5C872219A753}
+		{D6A6D94B-4D08-4B6A-9356-260D6730837F} = {70D3AA6C-1ED0-4D4B-9370-8C3C1D10BC2F}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {6C5D9705-DD4D-4171-B4F9-7DCA889F674E}

@@ -1,18 +1,14 @@
-using Autofac;
-using Autofac.Extensions.DependencyInjection;
-using Microsoft.AspNetCore.Hosting;
-using Microsoft.Extensions.Configuration;
-using Microsoft.Extensions.DependencyInjection;
-using Microsoft.Extensions.Hosting;
-using Microsoft.Extensions.Logging;
-using System;
-using System.Collections.Generic;
-using System.IO;
-using System.Linq;
-using System.Threading.Tasks;
-
 namespace KK.IH.Source.EventHub
 {
+    using System;
+    using System.IO;
+    using Autofac;
+    using Autofac.Extensions.DependencyInjection;
+    using KK.IH.Source.EventHub.Components.EventProcessing.Configuration;
+    using Microsoft.AspNetCore.Hosting;
+    using Microsoft.Extensions.Configuration;
+    using Microsoft.Extensions.Hosting;
+
     public class Program
     {
         public static void Main(string[] args)
@@ -34,6 +30,7 @@ namespace KK.IH.Source.EventHub
                     configBuilder.AddJsonFile($"appsettings.{context.HostingEnvironment.EnvironmentName}.json", optional: true);
                     configBuilder.AddJsonFile("/mnt/config/config.json", optional: true);
                     configBuilder.AddJsonFile("/mnt/secrets/secrets.json", optional: true);
+                    configBuilder.AddUserSecrets(typeof(Program).Assembly);
                     configBuilder.AddEnvironmentVariables();
                 })
                 .ConfigureLogging((context, loggingBuilder) =>
@@ -42,6 +39,7 @@ namespace KK.IH.Source.EventHub
                 })
                 .ConfigureContainer<ContainerBuilder>((hostBuilder, containerBuilder) =>
                 {
+                    containerBuilder.RegisterInstance(hostBuilder.Configuration.GetSection($"{ConfigKey.EventProcessorConfiguration}").Get<EventProcessorConfiguration>()).As<IEventProcessorConfiguration>();
                     containerBuilder.RegisterAssemblyModules(typeof(Program).Assembly);
                 })
                 .UseConsoleLifetime();

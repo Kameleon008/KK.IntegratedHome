@@ -2,13 +2,14 @@
 
   <PropertyGroup>
     <TargetFramework>netcoreapp3.1</TargetFramework>
+    <UserSecretsId>06c684d5-00cd-4e9a-a542-c2c139c4a87b</UserSecretsId>
   </PropertyGroup>
 
   <ItemGroup>
     <PackageReference Include="Autofac" Version="6.4.0" />
     <PackageReference Include="Autofac.Extensions.DependencyInjection" Version="8.0.0" />
     <PackageReference Include="Azure.Messaging.EventHubs.Processor" Version="5.7.3" />
-    <PackageReference Include="Microsoft.Azure.EventHubs.Processor" Version="4.3.2" />
+    <PackageReference Include="System.Configuration.ConfigurationManager" Version="6.0.1" />
   </ItemGroup>
 
 </Project>

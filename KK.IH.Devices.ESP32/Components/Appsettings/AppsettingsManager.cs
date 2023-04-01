@@ -1,4 +1,5 @@
-﻿using System.IO;
+﻿using System;
+using System.IO;
 using System.Text;
 using nanoFramework.Json;
 
@@ -15,6 +16,7 @@ namespace KK.IH.Devices.ESP32.Components.Appsettings
             byte[] fileContentBytes = new byte[fileStream.Length];
             fileStream.Read(fileContentBytes, 0, (int)fileStream.Length);
             var fileContentString = Encoding.UTF8.GetString(fileContentBytes, 0, (int)fileStream.Length);
+            Console.WriteLine(fileContentString);
             results = (Appsettings)JsonConvert.DeserializeObject(fileContentString, typeof(Appsettings));
         }
     }
